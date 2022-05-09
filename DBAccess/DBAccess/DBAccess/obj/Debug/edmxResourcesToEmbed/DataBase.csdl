@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DiaryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="RepeatRate">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Task" Relationship="Self.FK_Task_RepeatRateId" FromRole="RepeatRate" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="startTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="endTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="note" Type="String" MaxLength="250" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="typeId" Type="Int32" />
+    <Property Name="repeatRateId" Type="Int32" />
+    <Property Name="isDone" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="RepeatRate" Relationship="Self.FK_Task_RepeatRateId" FromRole="Task" ToRole="RepeatRate" />
+    <NavigationProperty Name="TaskType" Relationship="Self.FK_Task_TypeId" FromRole="Task" ToRole="TaskType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Task_UserId" FromRole="Task" ToRole="User" />
+  </EntityType>
+  <EntityType Name="TaskType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="color" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Task" Relationship="Self.FK_Task_TypeId" FromRole="TaskType" ToRole="Task" />
+    <NavigationProperty Name="User" Relationship="Self.FK_TaskType_User" FromRole="TaskType" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Task" Relationship="Self.FK_Task_UserId" FromRole="User" ToRole="Task" />
+    <NavigationProperty Name="TaskType" Relationship="Self.FK_TaskType_User" FromRole="User" ToRole="TaskType" />
+  </EntityType>
+  <Association Name="FK_Task_RepeatRateId">
+    <End Role="RepeatRate" Type="Self.RepeatRate" Multiplicity="0..1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RepeatRate">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="repeatRateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_TypeId">
+    <End Role="TaskType" Type="Self.TaskType" Multiplicity="0..1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="typeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_UserId">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaskType_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="TaskType" Type="Self.TaskType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TaskType">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DiaryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="RepeatRate" EntityType="Self.RepeatRate" />
+    <EntitySet Name="Task" EntityType="Self.Task" />
+    <EntitySet Name="TaskType" EntityType="Self.TaskType" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Task_RepeatRateId" Association="Self.FK_Task_RepeatRateId">
+      <End Role="RepeatRate" EntitySet="RepeatRate" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_TypeId" Association="Self.FK_Task_TypeId">
+      <End Role="TaskType" EntitySet="TaskType" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_UserId" Association="Self.FK_Task_UserId">
+      <End Role="User" EntitySet="User" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaskType_User" Association="Self.FK_TaskType_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="TaskType" EntitySet="TaskType" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
