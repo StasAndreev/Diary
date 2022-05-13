@@ -10,8 +10,11 @@ namespace DiaryDbAccess
 {
     public class User
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
+        public int ID { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ID { get; set; }
+        public Guid UID { get; set; }
 
         [Required, MaxLength(30)]
         public string Login { get; set; }

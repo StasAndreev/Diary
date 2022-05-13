@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace DiaryDbAccess
 {
@@ -24,6 +25,8 @@ namespace DiaryDbAccess
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Tasks)
                 .WithRequired(t => t.User)
@@ -37,8 +40,7 @@ namespace DiaryDbAccess
             modelBuilder.Entity<TaskType>()
                 .HasMany(tt => tt.Tasks)
                 .WithOptional(t => t.TaskType)
-                .HasForeignKey(t => t.TaskTypeID)
-                .WillCascadeOnDelete(false);
+                .HasForeignKey(t => t.TaskTypeID);
 
             modelBuilder.Entity<RepeatRate>()
                 .HasMany(r => r.Tasks)
