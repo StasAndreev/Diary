@@ -13,28 +13,22 @@ namespace DiaryDbAccess
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ID { get; set; }
 
-        [Required]
         public Guid UserID { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        [Required]
         public DateTime StartTime { get; set; }
 
-        [Required]
         public DateTime EndTime { get; set; }
 
         [MaxLength(250)]
         public string Note { get; set; }
 
-        
         public Guid TaskTypeID { get; set; }
 
-        [Required]
         public Guid RepeatRateID { get; set; }
 
-        [Required]
         public bool IsDone { get; set; }
 
         public virtual User User { get; set;}

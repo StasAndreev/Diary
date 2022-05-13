@@ -13,7 +13,6 @@ namespace DiaryDbAccess
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ID { get; set; }
 
-        [Required]
         public Guid UserID { get; set; }
 
         [Required, MaxLength(50)]

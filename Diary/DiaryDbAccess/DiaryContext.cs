@@ -27,26 +27,23 @@ namespace DiaryDbAccess
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Tasks)
                 .WithRequired(t => t.User)
-                .HasForeignKey(t => t.UserID)
-                .WillCascadeOnDelete(true);
+                .HasForeignKey(t => t.UserID);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.TaskTypes)
                 .WithRequired(tt => tt.User)
-                .HasForeignKey(tt => tt.UserID)
-                .WillCascadeOnDelete(true);
+                .HasForeignKey(tt => tt.UserID);
 
             modelBuilder.Entity<TaskType>()
                 .HasMany(tt => tt.Tasks)
-                .WithRequired(t => t.TaskType)
+                .WithOptional(t => t.TaskType)
                 .HasForeignKey(t => t.TaskTypeID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<RepeatRate>()
                 .HasMany(r => r.Tasks)
                 .WithRequired(t => t.RepeatRate)
-                .HasForeignKey(t => t.RepeatRateID)
-                .WillCascadeOnDelete(true);
+                .HasForeignKey(t => t.RepeatRateID);
         }
     }
 }
