@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity;
+
+namespace DiaryDbAccess
+{
+    public class DiaryContext : DbContext
+    {
+        public DiaryContext() : base("name=DiaryContext")
+        {
+            Database.SetInitializer<DiaryContext>(new CreateDatabaseIfNotExists<DiaryContext>());
+            Database.Initialize(false);
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskType> TaskTypes { get; set; }
+        public DbSet<RepeatRate> RepeatRates { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Tasks)
+                .WithRequired(t => t.User)
+                .HasForeignKey(t => t.UserID)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.TaskTypes)
+                .WithRequired(tt => tt.User)
+                .HasForeignKey(tt => tt.UserID)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<TaskType>()
+                .HasMany(tt => tt.Tasks)
+                .WithRequired(t => t.TaskType)
+                .HasForeignKey(t => t.TaskTypeID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RepeatRate>()
+                .HasMany(r => r.Tasks)
+                .WithRequired(t => t.RepeatRate)
+                .HasForeignKey(t => t.RepeatRateID)
+                .WillCascadeOnDelete(true);
+        }
+    }
+}
