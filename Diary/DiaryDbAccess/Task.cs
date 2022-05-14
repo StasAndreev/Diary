@@ -11,28 +11,31 @@ namespace DiaryDbAccess
     public class Task
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
-        public int ID { get; set; }
+        public int? ID { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid UID { get; set; }
+        public Guid? UID { get; set; }
 
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        public DateTime StartTime { get; set; }
+        [Required]
+        public DateTime? StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
+        [Required]
+        public DateTime? EndTime { get; set; }
 
         [MaxLength(250)]
         public string Note { get; set; }
 
         public int? TaskTypeID { get; set; }
 
-        public int RepeatRateID { get; set; }
+        public int? RepeatRateID { get; set; }
 
-        public bool IsDone { get; set; }
+        [Required]
+        public bool? IsDone { get; set; }
 
         public virtual User User { get; set;}
 

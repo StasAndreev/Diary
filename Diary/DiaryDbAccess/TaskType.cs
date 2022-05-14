@@ -11,12 +11,12 @@ namespace DiaryDbAccess
     public class TaskType
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
-        public int ID { get; set; }
+        public int? ID { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid UID { get; set; }
+        public Guid? UID { get; set; }
 
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 
         [Required, MaxLength(50)]
         public string Name { get; set; }

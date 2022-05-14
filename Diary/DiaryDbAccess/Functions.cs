@@ -20,7 +20,7 @@ namespace DiaryDbAccess
             {
                 User u = db.Users.Add(user);
                 db.SaveChanges();
-                result = u.ID;
+                result = u.ID.Value;
             }
             return result;
         }
@@ -37,7 +37,7 @@ namespace DiaryDbAccess
             {
                 Task t = db.Tasks.Add(task);
                 db.SaveChanges();
-                result = t.ID;
+                result = t.ID.Value;
             }
             return result;
         }
@@ -54,7 +54,7 @@ namespace DiaryDbAccess
             {
                 TaskType tt = db.TaskTypes.Add(type);
                 db.SaveChanges();
-                result = tt.ID;
+                result = tt.ID.Value;
             }
             return result;
         }
