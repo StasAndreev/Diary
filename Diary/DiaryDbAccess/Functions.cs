@@ -8,6 +8,8 @@ namespace DiaryDbAccess
 {
     public class Functions
     {
+        private static string NoRepeatName = "No repeat";
+
         /// <summary>
         /// Inserts new user (id field is redundant)
         /// </summary>
@@ -140,7 +142,6 @@ namespace DiaryDbAccess
         /// <summary>
         /// Deletes existing task found by ID field
         /// </summary>
-        /// <param name="type"> Task type info </param>
         public static void DeleteTask(int taskId)
         {
             using (DiaryContext db = new DiaryContext())
@@ -163,9 +164,8 @@ namespace DiaryDbAccess
         }
 
         /// <summary>
-        /// Updates existing task type found by ID field
+        /// Deletes existing task type found by ID field
         /// </summary>
-        /// <param name="type"> Task type info </param>
         public static void DeleteType(int taskTypeId)
         {
             using (DiaryContext db = new DiaryContext())
@@ -187,38 +187,118 @@ namespace DiaryDbAccess
             }
         }
 
+        /// <summary>
+        /// Select user with given login and password
+        /// </summary>
+        /// <returns> User id or 0 if not found </returns>
         public static int SelectUser(string login, string password)
         {
-            return 0;
+            int result = 0;
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from u in db.Users
+                    where u.Login == login && u.Password == password
+                    select u;
+
+                if (query.Count() > 0)
+                {
+                    result = query.First().ID.Value;
+                }
+            }
+            return result;
         }
 
-        public static List<int> SelectTasks(int userId)
+        /// <summary>
+        /// Select tasks of given user
+        /// </summary>
+        /// <returns> List of given user's tasks </returns>
+        public static List<Task> SelectTasks(int userId)
         {
-            return new List<int>();
+            List<Task> result = new List<Task>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.Tasks
+                    where t.UserID == userId
+                    select t;
+
+                foreach (Task t in query)
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
         }
 
-        public static Task SelectTask(int taskId)
+        /// <summary>
+        /// Select tasks of given user
+        /// </summary>
+        /// <returns> List of given user's tasks </returns>
+        public static List<Task> SelectRelevantTasks(int userId, DateTime weekStart)
         {
-            return new Task();
+            List<Task> result = new List<Task>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.Tasks
+                    where t.UserID == userId // && TODO
+                    select t;
+
+                foreach (Task t in query)
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
         }
 
-        public static List<int> SelectTaskTypes(int userId)
+        /// <summary>
+        /// Select task types of given user
+        /// </summary>
+        /// <returns> List of given user's task types </returns>
+        public static List<TaskType> SelectTaskTypes(int userId)
         {
-            return new List<int>();
+            List<TaskType> result = new List<TaskType>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from tt in db.TaskTypes
+                    where tt.UserID == userId
+                    select tt;
+
+                foreach (TaskType tt in query)
+                {
+                    result.Add(tt);
+                }
+            }
+            return result;
         }
 
-        public static TaskType SelectTaskType(int typeId)
-        {
-            return new TaskType();
-        }
-
+        /// <summary>
+        /// Select available repeat rates
+        /// </summary>
+        /// <returns> List of available repeat rates </returns>
         public static List<string> SelectRepeatTypes()
         {
+            List<string> result = new List<string>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from rr in db.RepeatRates
+                    select rr;
+
+                foreach (RepeatRate rr in query)
+                {
+                    result.Add(rr.Name);
+                }
+            }
             return new List<string>();
         }
 
-        public static Dictionary<Type, int> SelectWeeklyStatistics()
+        public static Dictionary<Type, int> SelectWeeklyStatistics(DateTime weekStart)
         {
+            
             return new Dictionary<Type, int>();
         }
     }
