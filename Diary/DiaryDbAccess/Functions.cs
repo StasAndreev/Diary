@@ -8,8 +8,6 @@ namespace DiaryDbAccess
 {
     public class Functions
     {
-        private static string NoRepeatName = "No repeat";
-
         /// <summary>
         /// Inserts new user (id field is redundant)
         /// </summary>
@@ -235,7 +233,79 @@ namespace DiaryDbAccess
         /// Select tasks of given user
         /// </summary>
         /// <returns> List of given user's tasks </returns>
-        public static List<Task> SelectRelevantTasks(int userId, DateTime weekStart)
+        public static List<Task> SelectRelevantNoRepeatTasks(int userId, DateTime weekStart)
+        {
+            List<Task> result = new List<Task>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.Tasks
+                    where t.UserID == userId // && TODO
+                    select t;
+
+                foreach (Task t in query)
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
+        }
+
+        public static List<Task> SelectDailyTasks(int userId)
+        {
+            List<Task> result = new List<Task>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.Tasks
+                    where t.UserID == userId // && TODO
+                    select t;
+
+                foreach (Task t in query)
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
+        }
+
+        public static List<Task> SelectRelevantWeeklyTasks(int userId, DateTime weekStart)
+        {
+            List<Task> result = new List<Task>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.Tasks
+                    where t.UserID == userId // && TODO
+                    select t;
+
+                foreach (Task t in query)
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
+        }
+
+        public static List<Task> SelectRelevantMonthlyTasks(int userId, DateTime weekStart)
+        {
+            List<Task> result = new List<Task>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.Tasks
+                    where t.UserID == userId // && TODO
+                    select t;
+
+                foreach (Task t in query)
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
+        }
+
+        public static List<Task> SelectRelevantAnnualTasks(int userId, DateTime weekStart)
         {
             List<Task> result = new List<Task>();
             using (DiaryContext db = new DiaryContext())
