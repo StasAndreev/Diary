@@ -12,7 +12,7 @@ namespace DiaryDbAccess
     {
         public DiaryContext() : base("name=DiaryContext")
         {
-            Database.SetInitializer<DiaryContext>(new CreateDatabaseIfNotExists<DiaryContext>());
+            Database.SetInitializer<DiaryContext>(new DiaryDbInitializer());
             Database.Initialize(false);
         }
 
