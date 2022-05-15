@@ -20,6 +20,7 @@ namespace DiaryDbAccess
         public DbSet<Task> Tasks { get; set; }
         public DbSet<TaskType> TaskTypes { get; set; }
         public DbSet<RepeatRate> RepeatRates { get; set; }
+        public DbSet<TaskCompletion> TaskCompletions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

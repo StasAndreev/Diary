@@ -15,6 +15,11 @@ namespace DiaryDbAccess
         /// <returns> id of this user </returns>
         public static int InsertUser(User user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if (user.Login == null || user.Password == null)
             {
                 throw new ArgumentException("Some of the required fields are missing");
@@ -37,6 +42,11 @@ namespace DiaryDbAccess
         /// <returns> id of this task </returns>
         public static int InsertTask(Task task)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if (task.UserID == null || task.Name == null || task.StartTime == null || task.EndTime == null ||
                 task.TaskTypeID == null || task.RepeatRateID == null)
             {
@@ -60,6 +70,11 @@ namespace DiaryDbAccess
         /// <returns> id for this task </returns>
         public static int InsertTaskType(TaskType taskType)
         {
+            if (taskType == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             if (taskType.Name == null || taskType.Color == null)
             {
                 throw new ArgumentException("Some of the required fields are missing");
@@ -81,6 +96,11 @@ namespace DiaryDbAccess
         /// <param name="type"> Task type info </param>
         public static void UpdateTask(Task task)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             using (DiaryContext db = new DiaryContext())
             {
                 var query =
@@ -113,6 +133,11 @@ namespace DiaryDbAccess
         /// <param name="type"> Task type info </param>
         public static void UpdateTaskType(TaskType taskType)
         {
+            if (taskType == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             using (DiaryContext db = new DiaryContext())
             {
                 var query =
@@ -373,13 +398,41 @@ namespace DiaryDbAccess
         }
 
         /// <summary>
-        /// Select amount of hours spent for every task type on given week
+        /// Select amount of hours spent for every task type on given weeks
         /// </summary>
         /// <returns> Map of task types and hours spent </returns>
-        public static Dictionary<TaskType, float> SelectWeeklyStatistics(DateTime weekStart)
+        public static Dictionary<TaskType, float> SelectWeeklyStatistics(DateTime weekStart, int weekAmount = 1)
         {
-            
-            return new Dictionary<TaskType, float>();
+            if (weekAmount <= 0)
+            {
+                throw new ArgumentException("Invalid amount of weeks to count statistics for");
+            }
+
+            Dictionary<TaskType, float> result = new Dictionary<TaskType, float>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from t in db.TaskCompletions
+                    where t.Date > weekStart && t.Date < weekStart.AddDays(7 * weekAmount)
+                    select t;
+
+                foreach (TaskCompletion tc in query)
+                {
+                    TaskType tt = tc.Task.TaskType;
+                    TimeSpan time = (tc.Task.EndTime - tc.Task.StartTime).Value;
+                    float hours = time.Hours + (float) time.Minutes / 60;
+
+                    if (result.ContainsKey(tt))
+                    {
+                        result[tt] += hours;
+                    }
+                    else
+                    {
+                        result.Add(tt, hours);
+                    }
+                }
+            }
+            return result;
         }
     }
 }
