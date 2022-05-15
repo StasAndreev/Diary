@@ -386,10 +386,14 @@ namespace DiaryDbAccess
             return new List<string>();
         }
 
-        public static Dictionary<Type, int> SelectWeeklyStatistics(DateTime weekStart)
+        /// <summary>
+        /// Select amount of hours spent for every task type on given week
+        /// </summary>
+        /// <returns> Map of task types and hours spent </returns>
+        public static Dictionary<TaskType, float> SelectWeeklyStatistics(DateTime weekStart)
         {
             
-            return new Dictionary<Type, int>();
+            return new Dictionary<TaskType, float>();
         }
     }
 }
