@@ -46,7 +46,6 @@ namespace DiaryDbAccess
             int result = 0;
             using (DiaryContext db = new DiaryContext())
             {
-                task.IsDone = false;
                 Task t = db.Tasks.Add(task);
                 db.SaveChanges();
                 result = t.ID.Value;
@@ -103,7 +102,6 @@ namespace DiaryDbAccess
                     dbTask.Note = task.Note ?? dbTask.Note;
                     dbTask.TaskTypeID = task.TaskTypeID ?? dbTask.TaskTypeID;
                     dbTask.RepeatRateID = task.RepeatRateID ?? dbTask.RepeatRateID;
-                    dbTask.IsDone = task.IsDone ?? dbTask.IsDone;
                     db.SaveChanges();
                 }
             }

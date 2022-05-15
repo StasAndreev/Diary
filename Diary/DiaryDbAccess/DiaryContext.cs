@@ -46,6 +46,11 @@ namespace DiaryDbAccess
                 .HasMany(r => r.Tasks)
                 .WithRequired(t => t.RepeatRate)
                 .HasForeignKey(t => t.RepeatRateID);
+
+            modelBuilder.Entity<Task>()
+                .HasMany(t => t.TaskCompletions)
+                .WithRequired(tc => tc.Task)
+                .HasForeignKey(tc => tc.TaskId);
         }
     }
 }

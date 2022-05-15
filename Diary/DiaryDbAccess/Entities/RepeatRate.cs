@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace DiaryDbAccess
 {
-    public enum RepeatRateOptions { NO_REPEAT, DAILY, WEEKLY, MONTHLY, ANNUAL }
-
     public class RepeatRate
     {
         public static List<string> optionNames = new List<string> { "No repeat", "Daily", "Weekly", "Monthly", "Annual" };

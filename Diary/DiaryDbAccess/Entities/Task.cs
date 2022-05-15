@@ -34,13 +34,12 @@ namespace DiaryDbAccess
 
         public int? RepeatRateID { get; set; }
 
-        [Required]
-        public bool? IsDone { get; set; }
-
         public virtual User User { get; set;}
 
         public virtual TaskType TaskType { get; set; }
 
         public virtual RepeatRate RepeatRate { get; set; }
+
+        public virtual ICollection<TaskCompletion> TaskCompletions { get; set; }
     }
 }

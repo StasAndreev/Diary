@@ -54,10 +54,12 @@
     <Compile Include="DiaryDbInitializer.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepeatRate.cs" />
-    <Compile Include="Task.cs" />
-    <Compile Include="TaskType.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Entities\RepeatRate.cs" />
+    <Compile Include="RepeatRateOptions.cs" />
+    <Compile Include="Entities\Task.cs" />
+    <Compile Include="Entities\TaskCompletion.cs" />
+    <Compile Include="Entities\TaskType.cs" />
+    <Compile Include="Entities\User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
