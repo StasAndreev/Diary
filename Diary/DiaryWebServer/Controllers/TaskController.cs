@@ -32,9 +32,9 @@ namespace DiaryWebServer.Controllers
             Functions.UpdateTask(task);
         }
 
-        public void DeleteTask(Task task)
+        public void DeleteTask(int taskId)
         {
-            Functions.DeleteTask(task.ID.Value);
+            Functions.DeleteTask(taskId);
         }
     }
 }

@@ -185,7 +185,7 @@ namespace DiaryDbAccess
         /// <summary>
         /// Deletes existing task type found by ID field
         /// </summary>
-        public static void DeleteType(int taskTypeId)
+        public static void DeleteTaskType(int taskTypeId)
         {
             using (DiaryContext db = new DiaryContext())
             {
