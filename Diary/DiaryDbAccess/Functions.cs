@@ -208,10 +208,10 @@ namespace DiaryDbAccess
         }
 
         /// <summary>
-        /// Select tasks of given user
+        /// Select all tasks of given user
         /// </summary>
         /// <returns> List of given user's tasks </returns>
-        public static List<Task> SelectTasks(int userId)
+        public static List<Task> SelectAllTasks(int userId)
         {
             List<Task> result = new List<Task>();
             using (DiaryContext db = new DiaryContext())
@@ -230,7 +230,7 @@ namespace DiaryDbAccess
         }
 
         /// <summary>
-        /// Select tasks of given user
+        /// Select no repeat tasks of given user for the week
         /// </summary>
         /// <returns> List of given user's tasks </returns>
         public static List<Task> SelectRelevantNoRepeatTasks(int userId, DateTime weekStart)
@@ -240,7 +240,8 @@ namespace DiaryDbAccess
             {
                 var query =
                     from t in db.Tasks
-                    where t.UserID == userId // && TODO
+                    where t.UserID == userId && t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.NO_REPEAT] &&
+                          t.StartTime > weekStart && t.StartTime < weekStart.AddDays(7)
                     select t;
 
                 foreach (Task t in query)
@@ -251,6 +252,10 @@ namespace DiaryDbAccess
             return result;
         }
 
+        /// <summary>
+        /// Select daily tasks of given user
+        /// </summary>
+        /// <returns> List of given user's tasks </returns>
         public static List<Task> SelectDailyTasks(int userId)
         {
             List<Task> result = new List<Task>();
@@ -258,7 +263,7 @@ namespace DiaryDbAccess
             {
                 var query =
                     from t in db.Tasks
-                    where t.UserID == userId // && TODO
+                    where t.UserID == userId && t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.DAILY]
                     select t;
 
                 foreach (Task t in query)
@@ -269,6 +274,10 @@ namespace DiaryDbAccess
             return result;
         }
 
+        /// <summary>
+        /// Select weekly tasks of given user
+        /// </summary>
+        /// <returns> List of given user's tasks </returns>
         public static List<Task> SelectRelevantWeeklyTasks(int userId, DateTime weekStart)
         {
             List<Task> result = new List<Task>();
@@ -276,7 +285,7 @@ namespace DiaryDbAccess
             {
                 var query =
                     from t in db.Tasks
-                    where t.UserID == userId // && TODO
+                    where t.UserID == userId && t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.WEEKLY]
                     select t;
 
                 foreach (Task t in query)
@@ -287,6 +296,10 @@ namespace DiaryDbAccess
             return result;
         }
 
+        /// <summary>
+        /// Select monthly tasks of given user for the week
+        /// </summary>
+        /// <returns> List of given user's tasks </returns>
         public static List<Task> SelectRelevantMonthlyTasks(int userId, DateTime weekStart)
         {
             List<Task> result = new List<Task>();
@@ -294,7 +307,8 @@ namespace DiaryDbAccess
             {
                 var query =
                     from t in db.Tasks
-                    where t.UserID == userId // && TODO
+                    where t.UserID == userId && t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.MONTHLY] &&
+                          t.StartTime.Value.Day >= weekStart.Day && t.StartTime.Value.Day < weekStart.Day + 7
                     select t;
 
                 foreach (Task t in query)
@@ -305,6 +319,10 @@ namespace DiaryDbAccess
             return result;
         }
 
+        /// <summary>
+        /// Select annual tasks of given user for the week
+        /// </summary>
+        /// <returns> List of given user's tasks </returns>
         public static List<Task> SelectRelevantAnnualTasks(int userId, DateTime weekStart)
         {
             List<Task> result = new List<Task>();
@@ -312,7 +330,9 @@ namespace DiaryDbAccess
             {
                 var query =
                     from t in db.Tasks
-                    where t.UserID == userId // && TODO
+                    where t.UserID == userId&& t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.ANNUAL] &&
+                          t.StartTime.Value.DayOfYear >= weekStart.DayOfYear &&
+                          t.StartTime.Value.DayOfYear < weekStart.DayOfYear + 7
                     select t;
 
                 foreach (Task t in query)
