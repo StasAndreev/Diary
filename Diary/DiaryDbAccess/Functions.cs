@@ -399,7 +399,7 @@ namespace DiaryDbAccess
         /// Select amount of hours spent for every task type on given weeks
         /// </summary>
         /// <returns> Map of task types and hours spent </returns>
-        public static Dictionary<TaskType, float> SelectWeeklyStatistics(DateTime weekStart, int weekAmount = 1)
+        public static Dictionary<TaskType, float> SelectWeeklyStatistics(int userId, DateTime weekStart, int weekAmount = 1)
         {
             if (weekAmount <= 0)
             {
@@ -411,7 +411,7 @@ namespace DiaryDbAccess
             {
                 var query =
                     from t in db.TaskCompletions
-                    where t.Date > weekStart && t.Date < weekStart.AddDays(7 * weekAmount)
+                    where t.Task.UserID == userId && t.Date > weekStart && t.Date < weekStart.AddDays(7 * weekAmount)
                     select t;
 
                 foreach (TaskCompletion tc in query)
