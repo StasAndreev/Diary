@@ -299,7 +299,7 @@ namespace DiaryDbAccess
         /// Select weekly tasks of given user
         /// </summary>
         /// <returns> List of given user's tasks </returns>
-        public static List<Task> SelectRelevantWeeklyTasks(int userId)
+        public static List<Task> SelectWeeklyTasks(int userId)
         {
             List<Task> result = new List<Task>();
             using (DiaryContext db = new DiaryContext())

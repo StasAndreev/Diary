@@ -17,6 +17,7 @@ namespace DiaryWebServer.Controllers
             return Functions.InsertUser(user);
         }
 
+        [Route("api/user/{login}/{password}")]
         public int GetUserId(string login, string password)
         {
             return Functions.SelectUserId(login, password);
