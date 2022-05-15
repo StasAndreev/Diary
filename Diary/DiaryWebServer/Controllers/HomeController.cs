@@ -11,7 +11,7 @@ namespace DiaryWebServer.Controllers
     {
         public ActionResult Index()
         {
-            // For database initialisation
+            // For database initialization
             DiaryContext db = new DiaryContext();
             db.Dispose();
 

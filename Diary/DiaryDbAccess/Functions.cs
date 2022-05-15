@@ -262,7 +262,7 @@ namespace DiaryDbAccess
                 var query =
                     from t in db.Tasks
                     where t.UserID == userId && t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.NO_REPEAT] &&
-                          t.StartTime > weekStart && t.StartTime < weekStart.AddDays(7)
+                          t.StartTime > weekStart && t.EndTime < weekStart.AddDays(7)
                     select t;
 
                 foreach (Task t in query)
@@ -329,7 +329,7 @@ namespace DiaryDbAccess
                 var query =
                     from t in db.Tasks
                     where t.UserID == userId && t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.MONTHLY] &&
-                          t.StartTime.Value.Day >= weekStart.Day && t.StartTime.Value.Day < weekStart.Day + 7
+                          t.StartTime.Value.Day >= weekStart.Day && t.EndTime.Value.Day < weekStart.Day + 7
                     select t;
 
                 foreach (Task t in query)
@@ -353,7 +353,7 @@ namespace DiaryDbAccess
                     from t in db.Tasks
                     where t.UserID == userId&& t.Name == RepeatRate.optionNames[(int)RepeatRateOptions.ANNUAL] &&
                           t.StartTime.Value.DayOfYear >= weekStart.DayOfYear &&
-                          t.StartTime.Value.DayOfYear < weekStart.DayOfYear + 7
+                          t.EndTime.Value.DayOfYear < weekStart.DayOfYear + 7
                     select t;
 
                 foreach (Task t in query)
