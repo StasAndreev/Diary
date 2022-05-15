@@ -210,7 +210,7 @@ namespace DiaryDbAccess
         /// Select user with given login and password
         /// </summary>
         /// <returns> User id or 0 if not found </returns>
-        public static int SelectUser(string login, string password)
+        public static int SelectUserId(string login, string password)
         {
             int result = 0;
             using (DiaryContext db = new DiaryContext())
