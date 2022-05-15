@@ -10,7 +10,7 @@ namespace DiaryWebServer.Controllers
 {
     public class StatsController : ApiController
     {
-        [Route("api/stats/{userId}/{weekStart}/weekAmount")]
+        [Route("api/stats/{userId}/{weekStart}/{weekAmount}")]
         public Dictionary<TaskType, float> GetStats(int userId, DateTime weekStart, int weekAmount)
         {
             return Functions.SelectWeeklyStatistics(userId, weekStart, weekAmount);
