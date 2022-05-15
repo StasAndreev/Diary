@@ -10,7 +10,7 @@ namespace DiaryDbAccess
 {
     public class RepeatRate
     {
-        public static List<string> optionNames = new List<string> { "No repeat", "Daily", "Weekly", "Monthly", "Annual" };
+        public static readonly List<string> optionNames = new List<string> { "No repeat", "Daily", "Weekly", "Monthly", "Annual" };
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
         public int? ID { get; set; }
