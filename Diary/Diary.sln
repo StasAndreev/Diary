@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiaryDbAccess", "DiaryDbAcc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiaryWebServer", "DiaryWebServer\DiaryWebServer.csproj", "{1115BE64-A224-44F8-9A6D-039A050E6904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiaryWebServer.Tests", "DiaryWebServer.Tests\DiaryWebServer.Tests.csproj", "{154CE327-A97A-40BC-A119-1E5AD78375EB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{1115BE64-A224-44F8-9A6D-039A050E6904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1115BE64-A224-44F8-9A6D-039A050E6904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1115BE64-A224-44F8-9A6D-039A050E6904}.Release|Any CPU.Build.0 = Release|Any CPU
-		{154CE327-A97A-40BC-A119-1E5AD78375EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{154CE327-A97A-40BC-A119-1E5AD78375EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{154CE327-A97A-40BC-A119-1E5AD78375EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{154CE327-A97A-40BC-A119-1E5AD78375EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

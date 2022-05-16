@@ -22,9 +22,9 @@ namespace DiaryWebServer.Controllers
             return result;
         }
 
-        public void PostTask(Task task)
+        public Guid PostTask(Task task)
         {
-            Functions.InsertTask(task);
+            return Functions.InsertTask(task);
         }
 
         public void PutTask(Task task)

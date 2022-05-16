@@ -15,9 +15,9 @@ namespace DiaryWebServer.Controllers
             return Functions.SelectTaskTypes(userId);
         }
 
-        public void PostTaskType(TaskType taskType)
+        public Guid PostTaskType(TaskType taskType)
         {
-            Functions.InsertTaskType(taskType);
+            return Functions.InsertTaskType(taskType);
         }
 
         public void PutTaskType(TaskType taskType)
