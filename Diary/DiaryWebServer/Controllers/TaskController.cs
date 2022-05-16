@@ -5,36 +5,45 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DiaryDbAccess;
+using System.Text.Json;
 
 namespace DiaryWebServer.Controllers
 {
     public class TaskController : ApiController
     {
         [Route("api/task/{userId}/{weekStart}")]
-        public List<Task> GetWeekTasks(Guid userId, DateTime weekStart)
+        public HttpResponseMessage GetWeekTasks(Guid userId, DateTime weekStart)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             List<Task> result = new List<Task>();
             result.AddRange(Functions.SelectRelevantNoRepeatTasks(userId, weekStart));
             result.AddRange(Functions.SelectDailyTasks(userId));
             result.AddRange(Functions.SelectWeeklyTasks(userId));
             result.AddRange(Functions.SelectRelevantMonthlyTasks(userId, weekStart));
             result.AddRange(Functions.SelectRelevantAnnualTasks(userId, weekStart));
-            return result;
+            response.Content = new StringContent(JsonSerializer.Serialize(result));
+            return response;
         }
 
-        public Guid PostTask(Task task)
+        public HttpResponseMessage PostTask(Task task)
         {
-            return Functions.InsertTask(task);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StringContent(Functions.InsertTask(task).ToString());
+            return response;
         }
 
-        public void PutTask(Task task)
+        public HttpResponseMessage PutTask(Task task)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             Functions.UpdateTask(task);
+            return response;
         }
 
-        public void DeleteTask(Guid taskId)
+        public HttpResponseMessage DeleteTask(Guid taskId)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             Functions.DeleteTask(taskId);
+            return response;
         }
     }
 }

@@ -19,5 +19,14 @@ namespace DiaryDbAccess
         public DateTime? Date { get; set; }
 
         public virtual Task Task { get; set; }
+
+        public TaskCompletion LightCopy()
+        {
+            TaskCompletion result = new TaskCompletion();
+            result.UID = UID;
+            result.Task = new Task { UID = Task.UID };
+            result.Date = Date;
+            return result;
+        }
     }
 }

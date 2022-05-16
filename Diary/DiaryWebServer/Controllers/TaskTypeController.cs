@@ -5,29 +5,38 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DiaryDbAccess;
+using System.Text.Json;
 
 namespace DiaryWebServer.Controllers
 {
     public class TaskTypeController : ApiController
     {
-        public List<TaskType> GetTaskTypes(Guid userId)
+        public HttpResponseMessage GetTaskTypes(Guid userId)
         {
-            return Functions.SelectTaskTypes(userId);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StringContent(JsonSerializer.Serialize(Functions.SelectTaskTypes(userId)));
+            return response;
         }
 
-        public Guid PostTaskType(TaskType taskType)
+        public HttpResponseMessage PostTaskType(TaskType taskType)
         {
-            return Functions.InsertTaskType(taskType);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StringContent(Functions.InsertTaskType(taskType).ToString());
+            return response;
         }
 
-        public void PutTaskType(TaskType taskType)
+        public HttpResponseMessage PutTaskType(TaskType taskType)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             Functions.UpdateTaskType(taskType);
+            return response;
         }
 
-        public void DeleteTaskType(Guid taskTypeId)
+        public HttpResponseMessage DeleteTaskType(Guid taskTypeId)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             Functions.DeleteTaskType(taskTypeId);
+            return response;
         }
     }
 }

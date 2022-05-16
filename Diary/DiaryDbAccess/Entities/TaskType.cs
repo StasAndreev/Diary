@@ -24,5 +24,15 @@ namespace DiaryDbAccess
         public virtual ICollection<Task> Tasks { get; set; }
 
         public virtual User User { get; set; }
+
+        public TaskType LightCopy()
+        {
+            TaskType result = new TaskType();
+            result.UID = UID;
+            result.Name = Name;
+            result.Color = Color;
+            result.User = new User { UID = User.UID };
+            return result;
+        }
     }
 }

@@ -11,16 +11,20 @@ namespace DiaryWebServer.Controllers
     public class UserController : ApiController
     {
         [Route("api/user/{login}/{password}")]
-        public Guid PostUser(string login, string password)
+        public HttpResponseMessage PostUser(string login, string password)
         {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK); 
             User user = new User { Login = login, Password = password };
-            return Functions.InsertUser(user);
+            response.Content = new StringContent(Functions.InsertUser(user).ToString());
+            return response;
         }
 
         [Route("api/user/{login}/{password}")]
-        public Guid GetUserId(string login, string password)
+        public HttpResponseMessage GetUserId(string login, string password)
         {
-            return Functions.SelectUserId(login, password);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StringContent(Functions.SelectUserId(login, password).ToString());
+            return response;
         }
     }
 }

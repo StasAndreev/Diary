@@ -244,7 +244,7 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    result.Add(t);
+                    result.Add(t.LightCopy());
                 }
             }
             return result;
@@ -267,7 +267,7 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    result.Add(t);
+                    result.Add(t.LightCopy());
                 }
             }
             return result;
@@ -289,7 +289,7 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    result.Add(t);
+                    result.Add(t.LightCopy());
                 }
             }
             return result;
@@ -311,7 +311,7 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    result.Add(t);
+                    result.Add(t.LightCopy());
                 }
             }
             return result;
@@ -334,7 +334,7 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    result.Add(t);
+                    result.Add(t.LightCopy());
                 }
             }
             return result;
@@ -358,7 +358,7 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    result.Add(t);
+                    result.Add(t.LightCopy());
                 }
             }
             return result;
@@ -380,7 +380,7 @@ namespace DiaryDbAccess
 
                 foreach (TaskType tt in query)
                 {
-                    result.Add(tt);
+                    result.Add(tt.LightCopy());
                 }
             }
             return result;
@@ -401,7 +401,7 @@ namespace DiaryDbAccess
 
                 foreach (RepeatRate rr in query)
                 {
-                    result.Add(rr);
+                    result.Add(rr.LightCopy());
                 }
             }
             return result;
@@ -428,7 +428,7 @@ namespace DiaryDbAccess
 
                 foreach (TaskCompletion tc in query)
                 {
-                    TaskType tt = tc.Task.TaskType;
+                    TaskType tt = tc.Task.TaskType.LightCopy();
                     TimeSpan time = (tc.Task.EndTime - tc.Task.StartTime).Value;
                     float hours = time.Hours + (float) time.Minutes / 60;
 

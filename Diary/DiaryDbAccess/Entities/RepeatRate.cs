@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DiaryDbAccess
 {
+    [Serializable]
     public class RepeatRate
     {
         public static readonly List<string> optionNames = new List<string> { "No repeat", "Daily", "Weekly", "Monthly", "Annual" };
@@ -19,5 +20,13 @@ namespace DiaryDbAccess
         public string Name { get; set; }
 
         public virtual ICollection<Task> Tasks { get; set; }
+
+        public RepeatRate LightCopy()
+        {
+            RepeatRate result = new RepeatRate();
+            result.UID = UID;
+            result.Name = Name;
+            return result;
+        }
     }
 }
