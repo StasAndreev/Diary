@@ -244,7 +244,6 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    t.ID = null;
                     result.Add(t);
                 }
             }
@@ -268,7 +267,6 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    t.ID = null;
                     result.Add(t);
                 }
             }
@@ -291,7 +289,6 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    t.ID = null;
                     result.Add(t);
                 }
             }
@@ -314,7 +311,6 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    t.ID = null;
                     result.Add(t);
                 }
             }
@@ -338,7 +334,6 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    t.ID = null;
                     result.Add(t);
                 }
             }
@@ -363,7 +358,6 @@ namespace DiaryDbAccess
 
                 foreach (Task t in query)
                 {
-                    t.ID = null;
                     result.Add(t);
                 }
             }
@@ -386,7 +380,6 @@ namespace DiaryDbAccess
 
                 foreach (TaskType tt in query)
                 {
-                    tt.ID = null;
                     result.Add(tt);
                 }
             }
@@ -424,7 +417,6 @@ namespace DiaryDbAccess
                 foreach (TaskCompletion tc in query)
                 {
                     TaskType tt = tc.Task.TaskType;
-                    tt.ID = null;
                     TimeSpan time = (tc.Task.EndTime - tc.Task.StartTime).Value;
                     float hours = time.Hours + (float) time.Minutes / 60;
 
