@@ -390,9 +390,21 @@ namespace DiaryDbAccess
         /// Select available repeat rates
         /// </summary>
         /// <returns> List of available repeat rates </returns>
-        public static List<string> GetRepeatTypes()
+        public static List<RepeatRate> SelectRepeatRates()
         {
-            return RepeatRate.optionNames;
+            List<RepeatRate> result = new List<RepeatRate>();
+            using (DiaryContext db = new DiaryContext())
+            {
+                var query =
+                    from rr in db.RepeatRates
+                    select rr;
+
+                foreach (RepeatRate rr in query)
+                {
+                    result.Add(rr);
+                }
+            }
+            return result;
         }
 
         /// <summary>
