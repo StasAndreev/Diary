@@ -11,31 +11,31 @@ namespace DiaryWebServer.Controllers
 {
     public class TaskTypeController : ApiController
     {
-        public HttpResponseMessage GetTaskTypes(Guid userId)
+        public HttpResponseMessage GetTaskTypes(string userId)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new StringContent(JsonSerializer.Serialize(Functions.SelectTaskTypes(userId)));
+            response.Content = new StringContent(JsonSerializer.Serialize(Functions.SelectTaskTypes(Guid.Parse(userId))));
             return response;
         }
 
-        public HttpResponseMessage PostTaskType(TaskType taskType)
+        public HttpResponseMessage PostTaskType([FromBody] TaskType taskType)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new StringContent(Functions.InsertTaskType(taskType).ToString());
             return response;
         }
 
-        public HttpResponseMessage PutTaskType(TaskType taskType)
+        public HttpResponseMessage PutTaskType([FromBody] TaskType taskType)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             Functions.UpdateTaskType(taskType);
             return response;
         }
 
-        public HttpResponseMessage DeleteTaskType(Guid taskTypeId)
+        public HttpResponseMessage DeleteTaskType(string taskTypeId)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            Functions.DeleteTaskType(taskTypeId);
+            Functions.DeleteTaskType(Guid.Parse(taskTypeId));
             return response;
         }
     }

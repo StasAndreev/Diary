@@ -11,12 +11,12 @@ namespace DiaryWebServer.Controllers
 {
     public class StatsController : ApiController
     {
-        [Route("api/stats/{userId}/{weekStart}/{weekAmount}")]
-        public HttpResponseMessage GetStats(Guid userId, DateTime weekStart, int weekAmount)
+        [Route("api/stats/{userId}/{weekAmount}")]
+        public HttpResponseMessage GetStats(string userId, [FromBody] DateTime weekStart, int weekAmount)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new StringContent(JsonSerializer.Serialize(
-                Functions.SelectWeeklyStatistics(userId, weekStart, weekAmount)));
+                Functions.SelectWeeklyStatistics(Guid.Parse(userId), weekStart, weekAmount)));
             return response;
         }
     }

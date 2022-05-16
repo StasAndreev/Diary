@@ -11,38 +11,38 @@ namespace DiaryWebServer.Controllers
 {
     public class TaskController : ApiController
     {
-        [Route("api/task/{userId}/{weekStart}")]
-        public HttpResponseMessage GetWeekTasks(Guid userId, DateTime weekStart)
+        public HttpResponseMessage GetWeekTasks(string userId, [FromBody] DateTime weekStart)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             List<Task> result = new List<Task>();
-            result.AddRange(Functions.SelectRelevantNoRepeatTasks(userId, weekStart));
-            result.AddRange(Functions.SelectDailyTasks(userId));
-            result.AddRange(Functions.SelectWeeklyTasks(userId));
-            result.AddRange(Functions.SelectRelevantMonthlyTasks(userId, weekStart));
-            result.AddRange(Functions.SelectRelevantAnnualTasks(userId, weekStart));
+            Guid userGuid = Guid.Parse(userId);
+            result.AddRange(Functions.SelectRelevantNoRepeatTasks(userGuid, weekStart));
+            result.AddRange(Functions.SelectDailyTasks(userGuid));
+            result.AddRange(Functions.SelectWeeklyTasks(userGuid));
+            result.AddRange(Functions.SelectRelevantMonthlyTasks(userGuid, weekStart));
+            result.AddRange(Functions.SelectRelevantAnnualTasks(userGuid, weekStart));
             response.Content = new StringContent(JsonSerializer.Serialize(result));
             return response;
         }
 
-        public HttpResponseMessage PostTask(Task task)
+        public HttpResponseMessage PostTask([FromBody] Task task)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new StringContent(Functions.InsertTask(task).ToString());
             return response;
         }
 
-        public HttpResponseMessage PutTask(Task task)
+        public HttpResponseMessage PutTask([FromBody] Task task)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             Functions.UpdateTask(task);
             return response;
         }
 
-        public HttpResponseMessage DeleteTask(Guid taskId)
+        public HttpResponseMessage DeleteTask(string taskId)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            Functions.DeleteTask(taskId);
+            Functions.DeleteTask(Guid.Parse(taskId));
             return response;
         }
     }
