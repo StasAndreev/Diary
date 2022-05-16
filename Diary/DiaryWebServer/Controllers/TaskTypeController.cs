@@ -10,7 +10,7 @@ namespace DiaryWebServer.Controllers
 {
     public class TaskTypeController : ApiController
     {
-        public List<TaskType> GetTaskTypes(int userId)
+        public List<TaskType> GetTaskTypes(Guid userId)
         {
             return Functions.SelectTaskTypes(userId);
         }
@@ -25,7 +25,7 @@ namespace DiaryWebServer.Controllers
             Functions.UpdateTaskType(taskType);
         }
 
-        public void DeleteTaskType(int taskTypeId)
+        public void DeleteTaskType(Guid taskTypeId)
         {
             Functions.DeleteTaskType(taskTypeId);
         }

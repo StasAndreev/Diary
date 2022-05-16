@@ -11,7 +11,7 @@ namespace DiaryWebServer.Controllers
     public class TaskController : ApiController
     {
         [Route("api/task/{userId}/{weekStart}")]
-        public List<Task> GetWeekTasks(int userId, DateTime weekStart)
+        public List<Task> GetWeekTasks(Guid userId, DateTime weekStart)
         {
             List<Task> result = new List<Task>();
             result.AddRange(Functions.SelectRelevantNoRepeatTasks(userId, weekStart));
@@ -32,7 +32,7 @@ namespace DiaryWebServer.Controllers
             Functions.UpdateTask(task);
         }
 
-        public void DeleteTask(int taskId)
+        public void DeleteTask(Guid taskId)
         {
             Functions.DeleteTask(taskId);
         }
